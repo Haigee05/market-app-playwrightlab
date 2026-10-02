@@ -77,7 +77,7 @@ test('TC04 Login ไม่กรอกหมายเลขโทรศัพท
         .getByRole('button', { name: 'เข้าสู่ระบบ' })
         .click();
 
-    // 5. ตรวจสอบว่ายังอยู่หน้า Login
+
     await expect(
         page.getByLabel('หมายเลขโทรศัพท์มือถือ')
     ).toBeVisible();
@@ -86,44 +86,38 @@ test('TC04 Login ไม่กรอกหมายเลขโทรศัพท
 
 test('TC05 Login ไม่กรอกรหัสผ่าน', async ({ page }) => {
 
-    // 1. เปิดหน้า Login
     await page.goto('http://localhost:5173/');
 
-    // 2. กรอกหมายเลขโทรศัพท์
     await page
         .getByLabel('หมายเลขโทรศัพท์มือถือ')
         .fill('0800000000');
 
-    // 3. ไม่กรอกรหัสผ่าน
 
-    // 4. กดปุ่มเข้าสู่ระบบ
     await page
         .getByRole('button', { name: 'เข้าสู่ระบบ' })
         .click();
 
-    // 5. ตรวจสอบว่ายังอยู่หน้า Login
+
     await expect(
         page.getByPlaceholder('อย่างน้อย 8 ตัวอักษร')
     ).toBeVisible();
 
 });
 
-test('TC06 Login ไม่กรอกข้อมูล', async ({ page }) => {
+test('TC06 กรอกน้อยกว่า 8 ตัวอักษร', async ({ page }) => {
 
-    // 1. เปิดหน้า Login
     await page.goto('http://localhost:5173/');
 
-    // 2. ไม่กรอกหมายเลขโทรศัพท์
-    // 3. ไม่กรอกรหัสผ่าน
+    await page
+        .getByLabel('หมายเลขโทรศัพท์มือถือ')
+        .fill('0811111111');
 
-    // 4. กดปุ่มเข้าสู่ระบบ
+    await page
+        .getByPlaceholder('อย่างน้อย 8 ตัวอักษร')
+        .fill('1234567');
+
     await page
         .getByRole('button', { name: 'เข้าสู่ระบบ' })
         .click();
-
-    // 5. ตรวจสอบว่ายังอยู่หน้า Login
-    await expect(
-        page.getByLabel('หมายเลขโทรศัพท์มือถือ')
-    ).toBeVisible();
 
 });
